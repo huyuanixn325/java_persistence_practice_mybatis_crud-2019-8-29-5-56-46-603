@@ -6,6 +6,8 @@ import tws.dto.EmployeeDTO;
 import tws.entity.Employee;
 import tws.repository.EmployeeMapper;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
 
@@ -20,5 +22,11 @@ public class EmployeeService {
         employeeDTO.setId(employee.getId());
         employeeDTO.setName(employee.getName());
         return employeeDTO;
+    }
+
+    public List<Employee> getAllEmployee(Integer page,Integer pageSize,String keyWord){
+        if (keyWord!=null) return employeeMapper.selectEmployeeByKeyWord(keyWord);
+            else
+         return employeeMapper.selectAll(page,pageSize);
     }
 }

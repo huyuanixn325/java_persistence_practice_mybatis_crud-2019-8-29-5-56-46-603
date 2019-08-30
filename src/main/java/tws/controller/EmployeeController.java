@@ -21,8 +21,9 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
     @GetMapping
-    public ResponseEntity<List<Employee>> getAll() {
-        return ResponseEntity.ok(employeeMapper.selectAll());
+    public ResponseEntity<List<Employee>> getAll(@RequestParam(required = false) Integer page,@RequestParam(required = false) Integer pageSize,
+                                                 @RequestParam(required = false) String keyWord) {
+        return ResponseEntity.ok(employeeService.getAllEmployee(page,pageSize,keyWord));
     }
 
     @GetMapping("/{employeeID}")
@@ -31,6 +32,8 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getEmployeeWithDesc(employeeID));
 
     }
+
+
 
     @PutMapping("/{employeeID}")
     public ResponseEntity<Employee> updateEmployeeByID(@PathVariable String employeeID,@RequestBody Employee employee){

@@ -8,7 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface EmployeeMapper {
-    List<Employee> selectAll();
+    List<Employee> selectAllEmployee();
+    List<Employee> selectAll(@Param("page") Integer page,@Param("pageSize") Integer pageSize);
 
     void addEmployee(@Param("employee") Employee employee);
 
@@ -17,4 +18,6 @@ public interface EmployeeMapper {
     void updateEmployee(@Param("employeeID") String employeeID,@Param("employee") Employee employee);
 
     void deleteEmployee(@Param("employeeID") String employeeID);
+
+    List<Employee> selectEmployeeByKeyWord(@Param("keyWord") String keyWord);
 }
