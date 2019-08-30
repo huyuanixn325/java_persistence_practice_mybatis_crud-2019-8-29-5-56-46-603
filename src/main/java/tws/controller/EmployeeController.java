@@ -3,8 +3,10 @@ package tws.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tws.dto.EmployeeDTO;
 import tws.entity.Employee;
 import tws.repository.EmployeeMapper;
+import tws.service.EmployeeService;
 
 import java.net.URI;
 import java.util.List;
@@ -16,16 +18,18 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeMapper employeeMapper;
-
+    @Autowired
+    private EmployeeService employeeService;
     @GetMapping
     public ResponseEntity<List<Employee>> getAll() {
         return ResponseEntity.ok(employeeMapper.selectAll());
     }
 
     @GetMapping("/{employeeID}")
-    public ResponseEntity<Employee> selectOneEmployeeByID(@PathVariable String employeeID) {
-        Employee employee = employeeMapper.selectOneEmployee(employeeID);
-        return ResponseEntity.ok(employee);
+    public ResponseEntity<EmployeeDTO> selectOneEmployeeByID(@PathVariable String employeeID) {
+
+        return ResponseEntity.ok(employeeService.getEmployeeWithDesc(employeeID));
+
     }
 
     @PutMapping("/{employeeID}")
@@ -49,6 +53,7 @@ public class EmployeeController {
         employeeMapper.deleteEmployee(employeeID);
         return ResponseEntity.ok().build();
     }
+
 
 
 }
